@@ -1,7 +1,7 @@
 env:
-  gh_mail: ""
-  gh_username: ""
-  gh_token: ""
+  gh_mail: "ENCRYPTED[a6555930826e36d6b1af8019b5a2f284e922b8c59ac7c098663ae1aaf0e48a3c3ae1ce2ad2794dbfb1d17bc161c202b5]"
+  gh_username: "ENCRYPTED[e5724805479cf63e3efb55aac30e29523061a2746676e682b7a9a57e73c755aeefc5213d3981037700848ad3adac7eb5]"
+  gh_token: "ENCRYPTED[1f997a2b01f020220f6d030da361da3262c47ae45acd0b58992338eca559362e5c86b076880f32731dcbfeac7f28e0c8]"
 
 task:
   name: "Fuck Builder"
