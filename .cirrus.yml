@@ -1,0 +1,43 @@
+env:
+  gh_mail: ""
+  gh_username: ""
+  gh_token: ""
+
+task:
+  name: "Fuck Builder"
+  timeout_in: 240m  
+  container:
+      image: marvelmathesh/docker:rom
+      cpu: 8
+      memory: 32G
+
+  Sync_script:
+      - git config --global user.email "$gh_mail"
+      - git config --global user.name "$gh_username"
+      - git config --global credential.helper store
+      - echo "https://$gh_username:$github_token@github.com" > ~/.git-credentials
+      - echo "============================"
+      - echo "   Syncing The Sources...   "
+      - echo "============================"
+      - cd ~
+      - mkdir rom
+      - cd rom
+      - repo init --depth=1 --no-repo-verify -u https://github.com/Project-Elixir/official_manifest -b Tiramisu -g default,-mips,-darwin,-notdefault
+      - git clone https://github.com/$gh_username/local_manifest_vince --depth 1 -b elixir-12-private .repo/local_manifests
+      - repo sync -c --no-clone-bundle --no-tags --optimized-fetch --prune --force-sync -j8
+      - echo "==========================="
+      - echo "     Syncing Complete!    "
+      - echo "==========================="
+
+  Build_script:
+      - echo "==========================="
+      - echo "   Starting the Build...   "
+      - echo "==========================="
+      - cd ~
+      - cd rom
+      - source build/envsetup.sh
+      - lunch aosp_vince-userdebug
+      - export SELINUX_IGNORE_NEVERALLOWS=true
+      - mka sepolicy
+      - mka bootimage
+      - mka init
